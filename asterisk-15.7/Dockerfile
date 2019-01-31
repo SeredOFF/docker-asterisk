@@ -1,16 +1,11 @@
 FROM centos:centos7
 MAINTAINER Daniil Seredov <dseredov@yandex.ru>
 
-RUN yum update -y
-RUN yum install -y epel-release
-
+RUN yum update -y && yum install -y epel-release \
 # Common libs
-RUN yum install -y \
     wget \
-    tar
-
+    tar \
 # For compiling
-RUN yum install -y \
     gcc \
     gcc-c++ \
     cpp \
@@ -18,20 +13,17 @@ RUN yum install -y \
 
 # Download and extract Asterisk source
 WORKDIR /usr/local/src
-RUN wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-15.7.1.tar.gz
-RUN tar -zxvf asterisk-15.7.1.tar.gz
+RUN wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-15.7.1.tar.gz && \
+    tar -zxvf asterisk-15.7.1.tar.gz
 
 # Install Asterisk dependencies
 WORKDIR /usr/local/src/asterisk-15.7.1
-RUN ./contrib/scripts/install_prereq install
-RUN ./contrib/scripts/get_mp3_source.sh
+RUN ./contrib/scripts/install_prereq install && ./contrib/scripts/get_mp3_source.sh
 
 # Compiling Asterisk
-RUN make clean
-RUN ./configure
-RUN make menuselect.makeopts
+RUN make clean && ./configure
 # Configure compiler options via menuselect
-RUN menuselect/menuselect \
+RUN make menuselect.makeopts && menuselect/menuselect \
     --enable format_mp3 \
     --enable codec_opus \
     --enable CORE-SOUNDS-EN-WAV \
@@ -44,10 +36,11 @@ RUN menuselect/menuselect \
     menuselect.makeopts
 RUN make && make install
 
-# Make samples. initscript and logrotation script (compress and rotate logfiles)
-RUN make samples
-RUN make config
-RUN make install-logrotate
+# Make samples, configs and logrotation script (compress and rotate logfiles)
+RUN make samples && make config && make install-logrotate
+
+# Import custom configs
+COPY ./configs /etc/asterisk
 
 # Start Asterisk
-CMD /etc/init.d/asterisk start
+CMD service asterisk start
