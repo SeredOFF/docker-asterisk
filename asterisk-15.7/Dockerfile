@@ -5,6 +5,7 @@ RUN yum update -y && yum install -y epel-release \
 # Common libs
     wget \
     tar \
+    openssl \
 # For compiling
     gcc \
     gcc-c++ \
@@ -43,4 +44,4 @@ RUN make samples && make config && make install-logrotate
 COPY ./configs /etc/asterisk
 
 # Start Asterisk
-CMD service asterisk start
+CMD service asterisk start && /bin/bash
