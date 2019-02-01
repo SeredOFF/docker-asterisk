@@ -1,6 +1,15 @@
 **ПРИМЕЧАНИЯ:**
 
-*** 
+***
+Запуск контейнера:
+
+docker run -td -p 5060:5060/udp -p 5060:5060/tcp -p 10000-10099:10000-10099/udp -p 8088:8088/tcp -p 8089:8089/tcp --name aster dseredov/docker-asterisk:15.7
+***
+
+<br>  
+<br>
+  
+***
 --- ari.conf
 
 Для связи внешнего прилежния с Asterisk необходимо WebSocket соединение.

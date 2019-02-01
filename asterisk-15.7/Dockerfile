@@ -43,5 +43,14 @@ RUN make samples && make config && make install-logrotate
 # Import custom configs
 COPY ./configs /etc/asterisk
 
+# Expose ports for PJSIP (pjsip.conf)
+EXPOSE 5060/udp
+EXPOSE 5060/tcp
+# Expose ports for RTP (rtp.conf) for the media stream
+EXPOSE 10000-10099/udp
+# Expose ports for WebRTC clients
+EXPOSE 8088/tcp
+EXPOSE 8089/tcp
+
 # Start Asterisk
 CMD service asterisk start && /bin/bash
