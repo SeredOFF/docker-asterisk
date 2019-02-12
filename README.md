@@ -68,3 +68,33 @@ openssl req -new -x509 -days 365 -nodes -out /tmp/foo.pem -keyout /tmp/foo.pem
 
 https://wiki.asterisk.org/wiki/display/AST/Interactive+Connectivity+Establishment+(ICE)+in+Asterisk?focusedCommentId=21464387#comment-21464387
 https://wiki.asterisk.org/wiki/display/AST/Calling+using+Google?focusedCommentId=26478244#comment-26478244
+***
+
+<br>  
+<br>
+  
+***
+--- Решение проблем с NAT (pjsip.conf)
+
+1. Если астер находится за NAT
+Для секции "type=transport" настраиваем параметры
+    -   маски наших локальных сетей
+            local_net=192.0.2.0/24
+            local_net=127.0.0.1/32
+    -   публичный ip адрес сервера, на котором расположен астер            
+            external_media_address=198.51.100.5
+            external_signaling_address=198.51.100.5 
+
+Для секции "type=endpoint"
+    -   direct_media=no
+
+В этом случае для входящих и исходящих запросов астера если адрес находится не в локальной сети, он будет заменяться внешним ip для медиа и sip запросов.
+
+2. Если астер на публичном адресе, а телефон за NAT
+Для секции "type=endpoint" настраиваем параметры
+    -   direct_media=no
+    -   rtp_symmetric=yes/no
+    -   force_rport=yes
+    -   rewrite_contact=yes
+    -   media_address=внешний ip телефона
+
