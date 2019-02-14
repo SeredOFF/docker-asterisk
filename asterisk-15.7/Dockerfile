@@ -46,11 +46,18 @@ COPY ./configs /etc/asterisk
 # Expose ports for PJSIP (pjsip.conf)
 EXPOSE 5060/udp
 EXPOSE 5060/tcp
+EXPOSE 5061/udp
+EXPOSE 5061/tcp
 # Expose ports for RTP (rtp.conf) for the media stream
 EXPOSE 10000-10099/udp
 # Expose ports for WebRTC clients
 EXPOSE 8088/tcp
 EXPOSE 8089/tcp
+# Expose ports for HTTP(s) clients
+#EXPOSE 80/tcp
+#EXPOSE 443/tcp
+# Expose ports for STUN
+EXPOSE 3478/udp
 
 # Start Asterisk
 CMD service asterisk start && /bin/bash

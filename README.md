@@ -3,7 +3,7 @@
 ***
 Запуск контейнера:
 
-docker run -td -p 5060:5060/udp -p 5060:5060/tcp -p 10000-10099:10000-10099/udp -p 8088:8088/tcp -p 8089:8089/tcp --name aster dseredov/docker-asterisk:15.7
+docker run -td -p 5060:5060/udp -p 5060:5060/tcp -p 5061:5061/udp -p 5061:5061/tcp -p 10000-10099:10000-10099/udp -p 8088:8088/tcp -p 8089:8089/tcp -p 3478:3478/udp --name aster dseredov/docker-asterisk:15.7
 ***
 
 <br>  
@@ -96,5 +96,5 @@ https://wiki.asterisk.org/wiki/display/AST/Calling+using+Google?focusedCommentId
     -   rtp_symmetric=yes/no
     -   force_rport=yes
     -   rewrite_contact=yes
-    -   media_address=внешний ip телефона
 
+**НО ЛУЧШЕ ИСПОЛЬЗОВАТЬ STUN!
