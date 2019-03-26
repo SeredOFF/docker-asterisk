@@ -14,7 +14,7 @@ RUN yum update -y && yum install -y epel-release \
 
 # Download and extract Asterisk source
 WORKDIR /usr/local/src
-RUN wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-15.7.1.tar.gz && \
+RUN wget https://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-15.7.1.tar.gz && \
     tar -zxvf asterisk-15.7.1.tar.gz
 
 # Install Asterisk dependencies
