@@ -58,6 +58,9 @@ EXPOSE 8089/tcp
 #EXPOSE 443/tcp
 # Expose ports for STUN
 EXPOSE 3478/udp
+EXPOSE 3478/tcp
+EXPOSE 19302/udp
+EXPOSE 19302/tcp
 
 # Start Asterisk
 CMD service asterisk start && /bin/bash
